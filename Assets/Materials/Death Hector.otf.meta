@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: e1e7cc92b0d1a4fe48cc09c316368d1f
+timeCreated: 1487304862
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Death Hector
+  fontNames:
+  - Death Hector
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
