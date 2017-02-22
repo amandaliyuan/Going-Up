@@ -7,7 +7,9 @@ public class move : MonoBehaviour {
 	Animation an;
 	float bounciness = 50;
 	public float maxSpeed;
-	bool right;
+	bool right = true;
+	Vector3 ground;
+	bool goingUp = false;
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
@@ -16,8 +18,9 @@ public class move : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKey (KeyCode.W) && Mathf.Abs(rb.velocity.y) < maxSpeed) {
-			rb.AddForce (Vector3.up*strength);
+		if (Input.GetKey (KeyCode.W) && Mathf.Abs(rb.velocity.y) < maxSpeed && goingUp == false) {
+			rb.AddForce (Vector3.up*strength * 15);
+			goingUp = true;
 		}
 		if (Input.GetKey (KeyCode.S) && Mathf.Abs(rb.velocity.y) < maxSpeed) {
 			rb.AddForce (Vector3.down * strength);
@@ -38,11 +41,13 @@ public class move : MonoBehaviour {
 			an.Play ("Stand");
 		}
 	if(right == true){
-		transform.rotation = Quaternion.Euler(transform.eulerAngles.x, 90, transform.eulerAngles.z);
+		transform.localEulerAngles = new Vector3(0,90,0);
 
 	}else{
-		transform.rotation = Quaternion.Euler(transform.eulerAngles.x -90,transform.eulerAngles.z);
+		transform.localEulerAngles = new Vector3(0,-90,0);
 	}
+
+
 
 	}
 	void OnTriggerEnter(Collider col){
@@ -50,6 +55,16 @@ public class move : MonoBehaviour {
 			Debug.Log("hit the platform");
 			rb.AddForce (new Vector3 (0, -rb.velocity.y, 0)*bounciness*3);
 			Debug.Log ("teddy hit");
+			goingUp = true;
+		}
+
+
+	}
+
+	void OnCollisionEnter(Collision col){
+		if(col.gameObject.tag == "ground"){
+			ground = transform.position;
+			goingUp = false;
 		}
 
 
