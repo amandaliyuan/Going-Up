@@ -2,14 +2,21 @@
 using System.Collections;
 
 public class move : MonoBehaviour {
+    enum Direction { RIGHT,LEFT};
+
 	Rigidbody rb;
-	float strength = 50;
-	Animation an;
+    Animation an;
+
+    float walkingSpeed = 8000;
+    float jumpStrength = 40, downJumpForce = 20;
+    public static int jumps = 3;
+    int jumpsRemaining = jumps;
+	
 	float bounciness = 50;
-	public float maxSpeed;
-	bool right = true;
+    Direction direction = Direction.RIGHT;
+
 	Vector3 ground;
-	bool goingUp = false;
+
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
@@ -18,34 +25,52 @@ public class move : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKey (KeyCode.W) && Mathf.Abs(rb.velocity.y) < maxSpeed && goingUp == false) {
-			rb.AddForce (Vector3.up*strength * 15);
-			goingUp = true;
-		}
-		if (Input.GetKey (KeyCode.S) && Mathf.Abs(rb.velocity.y) < maxSpeed) {
-			rb.AddForce (Vector3.down * strength);
-		}
-		if (Input.GetKey (KeyCode.A) && (Mathf.Abs(rb.velocity.x) < 100) ){
-			rb.AddForce (Vector3.left * strength);
-			right = false;
-		}
-		if(Input.GetKey(KeyCode.D) && Mathf.Abs(rb.velocity.x) < 100){
-			rb.AddForce(Vector3.right * strength);
-			right = true;
+
+        Vector3 newVelocity = rb.velocity;
+
+        if (Input.GetKeyDown (KeyCode.W) && jumpsRemaining > 0) {
+            jumpsRemaining--;
+            newVelocity.y = jumpStrength;
 		}
 
-		if (Mathf.Abs(rb.velocity.magnitude) > 0f) {
+		if (Input.GetKeyDown (KeyCode.S)) {
+            newVelocity.y -= downJumpForce;
+		}
+
+		if (Input.GetKey (KeyCode.A) && (Mathf.Abs(rb.velocity.x) < 100) ){
+            if(direction != Direction.RIGHT)
+            {
+                newVelocity.x = 0;
+            }
+			rb.AddForce (Vector3.left * walkingSpeed);
+            direction = Direction.RIGHT;
+		}
+
+		if(Input.GetKey(KeyCode.D) && Mathf.Abs(rb.velocity.x) < 100){
+            if (direction != Direction.LEFT)
+            {
+                newVelocity.x = 0;
+            }
+            rb.AddForce(Vector3.right * walkingSpeed);
+            direction = Direction.LEFT;
+		}
+
+		if (Mathf.Abs(rb.velocity.x) > 1f) {
 			
 				an.Play ("Walk");
 		} else {
 			an.Play ("Stand");
 		}
-	if(right == true){
-		transform.localEulerAngles = new Vector3(0,90,0);
 
-	}else{
-		transform.localEulerAngles = new Vector3(0,-90,0);
-	}
+
+        rb.velocity = newVelocity;
+
+        if (direction == Direction.RIGHT){
+		    transform.localEulerAngles = new Vector3(0,90,0);
+
+	    }else{
+		    transform.localEulerAngles = new Vector3(0,-90,0);
+	    }
 
 
 
@@ -55,7 +80,7 @@ public class move : MonoBehaviour {
 			Debug.Log("hit the platform");
 			rb.AddForce (new Vector3 (0, -rb.velocity.y, 0)*bounciness*3);
 			Debug.Log ("teddy hit");
-			goingUp = true;
+            jumpsRemaining = jumps;
 		}
 
 
@@ -64,7 +89,7 @@ public class move : MonoBehaviour {
 	void OnCollisionEnter(Collision col){
 		if(col.gameObject.tag == "ground"){
 			ground = transform.position;
-			goingUp = false;
+            jumpsRemaining = jumps;
 		}
 
 
