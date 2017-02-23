@@ -14,19 +14,20 @@ public class move : MonoBehaviour {
 	
 	float bounciness = 50;
     Direction direction = Direction.RIGHT;
-
+    Vector3 newVelocity;
 	Vector3 ground;
 
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
 		an = GetComponent<Animation> ();
+		newVelocity = rb.velocity;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-        Vector3 newVelocity = rb.velocity;
+        newVelocity = rb.velocity;
 
         if (Input.GetKeyDown (KeyCode.W) && jumpsRemaining > 0) {
             jumpsRemaining--;
@@ -66,10 +67,10 @@ public class move : MonoBehaviour {
         rb.velocity = newVelocity;
 
         if (direction == Direction.RIGHT){
-		    transform.localEulerAngles = new Vector3(0,90,0);
+		    transform.localEulerAngles = new Vector3(0,-90,0);
 
 	    }else{
-		    transform.localEulerAngles = new Vector3(0,-90,0);
+		    transform.localEulerAngles = new Vector3(0,90,0);
 	    }
 
 
@@ -78,7 +79,8 @@ public class move : MonoBehaviour {
 	void OnTriggerEnter(Collider col){
 		if(col.gameObject.CompareTag("platform") && transform.position.y > col.gameObject.transform.position.y){
 			Debug.Log("hit the platform");
-			rb.AddForce (new Vector3 (0, -rb.velocity.y, 0)*bounciness*3);
+			//newVelocity.y = 0;
+			rb.AddForce (new Vector3 (0, 1, 0)*bounciness*10000);
 			Debug.Log ("teddy hit");
             jumpsRemaining = jumps;
 		}
