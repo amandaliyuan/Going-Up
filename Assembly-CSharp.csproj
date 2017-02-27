@@ -46,8 +46,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\backToStart.cs" />
      <Compile Include="Assets\camera.cs" />
      <Compile Include="Assets\move.cs" />
+     <Compile Include="Assets\startScreen.cs" />
      <Compile Include="Assets\teddyUp.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
