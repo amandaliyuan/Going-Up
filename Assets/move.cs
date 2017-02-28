@@ -32,7 +32,6 @@ public class move : MonoBehaviour {
 	void OnTriggerEnter(Collider col){
 		if(col.gameObject.CompareTag("platform") && transform.position.y > col.gameObject.transform.position.y){
 			Debug.Log("hit the platform");
-			//newVelocity.y = 0;
 			rb.AddForce (new Vector3 (0, 1, 0)*bounciness*10000);
 			Debug.Log ("teddy hit");
             jumpsRemaining = jumps;
