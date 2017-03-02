@@ -11,6 +11,8 @@ public class move : MonoBehaviour {
     float jumpStrength = 40, downJumpForce = 20;
     public static int jumps = 3;
     int jumpsRemaining = jumps;
+
+    AudioSource jump = null;
 	
 	float bounciness = 50;
     Direction direction = Direction.RIGHT;
@@ -21,14 +23,16 @@ public class move : MonoBehaviour {
 		rb = GetComponent<Rigidbody> ();
 		an = GetComponent<Animation> ();
 		newVelocity = rb.velocity;
-	}
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
+
 		movePlayer ();
 		anim ();
 		swapDir ();
-	}
+    }
 	void OnTriggerEnter(Collider col){
 		if(col.gameObject.CompareTag("platform") && transform.position.y > col.gameObject.transform.position.y){
 			Debug.Log("hit the platform");
@@ -100,5 +104,4 @@ public class move : MonoBehaviour {
 		rb.velocity = newVelocity;
 
 	}
-
 }
