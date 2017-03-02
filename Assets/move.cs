@@ -12,7 +12,7 @@ public class move : MonoBehaviour {
     public static int jumps = 3;
     int jumpsRemaining = jumps;
 
-    AudioSource jump = null;
+    AudioSource jump;
 	
 	float bounciness = 50;
     Direction direction = Direction.RIGHT;
@@ -23,15 +23,18 @@ public class move : MonoBehaviour {
 		rb = GetComponent<Rigidbody> ();
 		an = GetComponent<Animation> ();
 		newVelocity = rb.velocity;
+		jump = GameObject.FindWithTag("audio").GetComponent<AudioSource>();
         
     }
 	
 	// Update is called once per frame
 	void Update () {
-
 		movePlayer ();
 		anim ();
 		swapDir ();
+		if(Input.GetKey(KeyCode.Escape)){
+			Application.Quit();
+		}
     }
 	void OnTriggerEnter(Collider col){
 		if(col.gameObject.CompareTag("platform") && transform.position.y > col.gameObject.transform.position.y){
@@ -77,6 +80,7 @@ public class move : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.W) && jumpsRemaining > 0) {
 			jumpsRemaining--;
 			newVelocity.y = jumpStrength;
+			jump.Play();
 		}
 
 		if (Input.GetKeyDown (KeyCode.S)) {
