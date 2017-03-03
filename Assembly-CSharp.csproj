@@ -46,13 +46,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\backToStart.cs" />
-     <Compile Include="Assets\camera.cs" />
-     <Compile Include="Assets\move.cs" />
-     <Compile Include="Assets\startScreen.cs" />
-     <Compile Include="Assets\teddyUp.cs" />
-     <Compile Include="Assets\timer.cs" />
-     <Compile Include="Assets\toEnd.cs" />
+     <Compile Include="Assets\rotating.cs" />
+     <Compile Include="Assets\scripts\backToStart.cs" />
+     <Compile Include="Assets\scripts\camera.cs" />
+     <Compile Include="Assets\scripts\move.cs" />
+     <Compile Include="Assets\scripts\startScreen.cs" />
+     <Compile Include="Assets\scripts\teddyUp.cs" />
+     <Compile Include="Assets\scripts\timer.cs" />
+     <Compile Include="Assets\scripts\toEnd.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
